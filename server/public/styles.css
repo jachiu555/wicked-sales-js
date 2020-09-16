@@ -1,0 +1,31 @@
+header {
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.797);
+  padding-left: 200px;
+  height: 4vh;
+}
+
+h3 {
+  color: white;
+  font-size: medium;
+  padding-top: 1vh;
+}
+
+.container{
+  padding-top: 20px;
+}
+
+.cardImage {
+  height: 40%;
+  width: 40%;
+  object-fit: contain;
+}
+
+.card-body {
+  padding: 0px;
+  padding-top: 30px;
+}
+
+.card-body {
+  font-size: 12px;
+}
