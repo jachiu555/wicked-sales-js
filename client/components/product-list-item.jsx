@@ -17,7 +17,7 @@ export default class ProductListItem extends React.Component {
         <img src={this.props.item.image} className="card-img-top cardImage mx-auto w-50" alt="Card image cap"></img>
         <div className="card-body">
           <h6 className="card-title">{this.props.item.name}</h6>
-          <p className="card-price">${this.props.item.price}</p>
+          <p className="card-price">${(this.props.item.price / 100).toFixed(2)}</p>
           <p className="card-text text-center">{this.props.item.shortDescription}</p>
         </div>
       </div>
