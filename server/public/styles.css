@@ -13,11 +13,12 @@ h3 {
 
 .container{
   padding-top: 20px;
+  display: flex;
 }
 
 .cardImage {
   height: 40%;
-  width: 40%;
+  width: 40;
   object-fit: contain;
 }
 
@@ -28,4 +29,7 @@ h3 {
 
 .card-body {
   font-size: 12px;
+}
+
+.cardDetails {
 }
