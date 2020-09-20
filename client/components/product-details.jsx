@@ -12,13 +12,11 @@ export default class ProductDetails extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props);
     const productId = this.props.viewParams.productId;
 
     fetch(`/api/products/${productId}`)
       .then(response => response.json())
       .then(data => {
-        // console.log('productInfo', data);
         this.setState({
           product: data
         });
@@ -35,7 +33,8 @@ export default class ProductDetails extends React.Component {
       ? <h1>Retrieving info...</h1>
       : <>
         <div className="card container detailContainer">
-          <div onClick={this.handleClick}>&lt; Back to catalog</div>
+          <a className="nav-link active" href="#" onClick={this.handleClick}>&lt; Back to catalog</a>
+          <br></br>
           <div className="row cardDetails mx-3">
             <img src={this.state.product.image} className="detailImg"></img>
             <div className="card-body-details col">
