@@ -16,6 +16,11 @@ h3 {
   display: flex;
 }
 
+.detailContainer, .detailImg {
+  width: 50%;
+  object: contain;
+}
+
 .cardImage {
   height: 40%;
   width: 40;
@@ -29,7 +34,4 @@ h3 {
 
 .card-body {
   font-size: 12px;
-}
-
-.cardDetails {
 }
