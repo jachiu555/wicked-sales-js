@@ -48,6 +48,29 @@ app.get('/api/products/:productId', (req, res, next) => {
   }
 });
 
+app.get('/api/cart', (req, res, next) => {
+  res.json([]);
+});
+
+app.post('/api/cart', (req, res, next) => {
+  const userInput = [req.body.productId];
+
+  if (userInput > 0) {
+    db.query('SELECT "price" FROM "products" WHERE "productId" = $1', userInput)
+      .then(result => {
+        if (!result.rows[0]) {
+          res.status(400).send('ProductId given does not have a price.');
+        }
+        res.json(result);
+      })
+      .catch(err => {
+        next(err);
+      });
+  } else {
+    res.status(400).send('ProductId cannot be less than 0.');
+  }
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
