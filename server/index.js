@@ -5,6 +5,7 @@ const db = require('./database');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const sessionMiddleware = require('./session-middleware');
+// const session = require('express-session');
 
 const app = express();
 
@@ -57,11 +58,33 @@ app.post('/api/cart', (req, res, next) => {
 
   if (userInput > 0) {
     db.query('SELECT "price" FROM "products" WHERE "productId" = $1', userInput)
-      .then(result => {
-        if (!result.rows[0]) {
+      .then(priceResult => {
+        if (!priceResult.rows[0]) {
           res.status(400).send('ProductId given does not have a price.');
         }
-        res.json(result);
+
+        const cartSQL = `INSERT INTO "carts" ("cartId", "createdAt")
+        VALUES (default, default)
+        RETURNING "cartId"`;
+
+        if (!req.session.cartId) {
+          return db.query(cartSQL)
+            .then(cartInfo => {
+              req.session.cartId = cartInfo.rows[0].cartId;
+              return ({
+                cartId: req.session.cartId,
+                productPrice: priceResult.rows[0].price
+              });
+            });
+        } else {
+          return ({
+            cartId: req.session.cartId,
+            productPrice: priceResult.rows[0].price
+          });
+        }
+      })
+      .then(result => {
+        res.status(200).send(result);
       })
       .catch(err => {
         next(err);
