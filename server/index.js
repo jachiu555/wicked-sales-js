@@ -50,7 +50,24 @@ app.get('/api/products/:productId', (req, res, next) => {
 });
 
 app.get('/api/cart', (req, res, next) => {
-  res.json([]);
+  if (!req.session.cartId) {
+    return [];
+  } else {
+    const cartItemDataSQL = `select "c"."cartItemId",
+        "c"."price",
+        "p"."productId",
+        "p"."image",
+        "p"."name",
+        "p"."shortDescription"
+        from "cartItems" as "c"
+        join "products" as "p" using ("productId")
+        where "c"."cartItemId" = $1`;
+
+    return (db.query(cartItemDataSQL, [req.session.cartId]))
+      .then(cartItem => {
+        res.status(201).json(cartItem.rows[0]);
+      });
+  }
 });
 
 app.post('/api/cart', (req, res, next) => {
