@@ -54,13 +54,13 @@ app.get('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/cart', (req, res, next) => {
-  const userInput = [req.body.productId];
+  const userInput = parseInt([req.body.productId]);
 
   if (userInput > 0) {
-    db.query('SELECT "price" FROM "products" WHERE "productId" = $1', userInput)
+    db.query('SELECT "price" FROM "products" WHERE "productId" = $1', [userInput])
       .then(priceResult => {
         if (!priceResult.rows[0]) {
-          res.status(400).send('ProductId given does not have a price.');
+          throw new ClientError('ProductId given does not have a price.', 400);
         }
 
         const cartSQL = `INSERT INTO "carts" ("cartId", "createdAt")
@@ -70,9 +70,8 @@ app.post('/api/cart', (req, res, next) => {
         if (!req.session.cartId) {
           return db.query(cartSQL)
             .then(cartInfo => {
-              req.session.cartId = cartInfo.rows[0].cartId;
               return ({
-                cartId: req.session.cartId,
+                cartId: cartInfo.rows[0].cartId,
                 productPrice: priceResult.rows[0].price
               });
             });
@@ -84,7 +83,30 @@ app.post('/api/cart', (req, res, next) => {
         }
       })
       .then(result => {
-        res.status(200).send(result);
+        req.session.cartId = result.cartId;
+
+        const cartItemsSQL = `insert into "cartItems" ("cartId", "productId", "price")
+        values ($1, $2, $3)
+        returning "cartItemId"`;
+
+        return (db.query(cartItemsSQL, [req.session.cartId, userInput, result.productPrice]));
+
+      })
+      .then(cartItemData => {
+        const cartItemDataSQL = `select "c"."cartItemId",
+        "c"."price",
+        "p"."productId",
+        "p"."image",
+        "p"."name",
+        "p"."shortDescription"
+        from "cartItems" as "c"
+        join "products" as "p" using ("productId")
+        where "c"."cartItemId" = $1`;
+
+        return (db.query(cartItemDataSQL, [cartItemData.rows[0].cartItemId]))
+          .then(cartItem => {
+            res.status(201).json(cartItem.rows[0]);
+          });
       })
       .catch(err => {
         next(err);
