@@ -13,11 +13,16 @@ h3 {
 
 .container{
   padding-top: 20px;
+  display: flex;
+}
+
+.detailContainer, .detailImg {
+  width: 50%;
 }
 
 .cardImage {
   height: 40%;
-  width: 40%;
+  width: 40;
   object-fit: contain;
 }
 
