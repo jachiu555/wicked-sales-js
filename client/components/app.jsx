@@ -12,18 +12,30 @@ export default class App extends React.Component {
       view: {
         name: 'catalog',
         params: {}
-      }
+      },
+      cart: []
     };
 
     this.setView = this.setView.bind(this);
   }
 
   componentDidMount() {
+    this.getCartItems();
     fetch('/api/health-check')
       .then(res => res.json())
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
+  }
+
+  getCartItems() {
+    fetch('/api/cart')
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          cart: data
+        });
+      });
   }
 
   setView(name, params) {
@@ -51,7 +63,7 @@ export default class App extends React.Component {
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
       : <>
-        <Header />
+        <Header cartItemCount={this.state.cart.length}/>
         {this.renderView()}
       </>;
   }
