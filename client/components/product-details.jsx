@@ -43,7 +43,7 @@ export default class ProductDetails extends React.Component {
               <p className="card-text text-left">{this.state.product.shortDescription}</p>
             </div>
           </div>
-          <div className="cardLongDescription m-5">
+          <div className="cardLongDescription mt-5">
             <p>{this.state.product.longDescription}</p>
           </div>
         </div>

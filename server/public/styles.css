@@ -16,13 +16,16 @@ h3 {
   display: flex;
 }
 
-.detailContainer, .detailImg {
+.detailContainer {
   width: 50%;
 }
 
+.detailImg {
+  width: 18rem;
+}
+
 .cardImage {
-  height: 40%;
-  width: 40;
+  height: 12rem;
   object-fit: contain;
 }
 
