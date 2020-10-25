@@ -52,23 +52,18 @@ app.get('/api/products/:productId', (req, res, next) => {
 app.get('/api/cart', (req, res, next) => {
   if (!req.session.cartId) {
     res.json([]);
-  } else {
-    const cartItemDataSQL = `select "c"."cartItemId",
-        "c"."price",
-        "p"."productId",
-        "p"."image",
-        "p"."name",
-        "p"."shortDescription"
-        from "cartItems" as "c"
-        join "products" as "p" using ("productId")
-        where "c"."cartItemId" = $1`;
-
-    return (db.query(cartItemDataSQL, [req.session.cartId]))
-      .then(cartItem => {
-        res.json(cartItem.rows[0]);
-      })
-      .catch(error => next(error));
   }
+  db.query(`select "c"."cartItemId",
+      "c"."price",
+      "p"."productId",
+      "p"."image",
+      "p"."name",
+      "p"."shortDescription"
+      from "cartItems" as "c"
+      join "products" as "p" using ("productId")
+      where "c"."cartId" =  ${req.session.cartId}`)
+    .then(response => res.json(response.rows))
+    .catch(error => console.error(error));
 });
 
 app.post('/api/cart', (req, res, next) => {
