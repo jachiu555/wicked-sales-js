@@ -17,6 +17,8 @@ export default class App extends React.Component {
     };
 
     this.setView = this.setView.bind(this);
+    this.getCartItems = this.getCartItems.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +28,8 @@ export default class App extends React.Component {
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
+
+    this.getCartItems();
   }
 
   getCartItems() {
@@ -35,6 +39,24 @@ export default class App extends React.Component {
         this.setState({
           cart: data
         });
+      });
+  }
+
+  addToCart(product) {
+    fetch('api/cart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(product)
+    })
+      .then(data => {
+        this.setState({
+          cart: this.state.cart + 1
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
       });
   }
 
@@ -55,7 +77,7 @@ export default class App extends React.Component {
       case 'catalog':
         return <ProductList setView={this.setView}/>;
       case 'details':
-        return <ProductDetails viewParams={viewParams} setView={this.setView}/>;
+        return <ProductDetails addToCart={this.addToCart} viewParams={viewParams} setView={this.setView}/>;
     }
   }
 
@@ -63,7 +85,7 @@ export default class App extends React.Component {
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
       : <>
-        <Header cartItemCount={this.state.cart.length}/>
+        <Header cartItemCount={[this.state.cart].length}/>
         {this.renderView()}
       </>;
   }
