@@ -37,7 +37,7 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          cart: data
+          cart: data.length
         });
       });
   }
@@ -85,7 +85,7 @@ export default class App extends React.Component {
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
       : <>
-        <Header cartItemCount={[this.state.cart].length}/>
+        <Header cartItemCount={this.state.cart}/>
         {this.renderView()}
       </>;
   }
