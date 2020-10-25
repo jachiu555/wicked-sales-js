@@ -11,6 +11,10 @@ h3 {
   padding-top: 1vh;
 }
 
+.fa-shopping-cart {
+  color: white;
+}
+
 .container{
   padding-top: 20px;
   display: flex;
