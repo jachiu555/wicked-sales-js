@@ -7,12 +7,12 @@ export default class CartSummary extends React.Component {
     const cartArray = this.props.cartState.map(items => <CartSummaryItem cartState={this.props.cart} setView={this.props.setView} item={items} key={items.cartItemId}/>);
 
     return (
-      <>
+      <div className="col justify-content-right">
         <h6 className={'backToCatalogButton'} ><button onClick={e => { this.props.setView('catalog', {}); }}>Back to Catalog</button></h6>
-        <div className="column justify-content-center">
+        <div className="column">
           {cartArray}
         </div>
-      </>
+      </div>
     );
   }
 }
