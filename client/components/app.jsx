@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './header';
 import ProductList from './product-list';
 import ProductDetails from './product-details';
+import CartSummary from './cart-summary';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -23,13 +24,12 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.getCartItems();
+
     fetch('/api/health-check')
       .then(res => res.json())
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
-
-    this.getCartItems();
   }
 
   getCartItems() {
@@ -37,8 +37,11 @@ export default class App extends React.Component {
       .then(res => res.json())
       .then(data => {
         this.setState({
-          cart: data.length
+          cart: data
         });
+      })
+      .catch(error => {
+        console.error('getCartItems fetch error', error);
       });
   }
 
@@ -50,10 +53,8 @@ export default class App extends React.Component {
       },
       body: JSON.stringify(product)
     })
-      .then(data => {
-        this.setState({
-          cart: this.state.cart + 1
-        });
+      .then(() => {
+        this.getCartItems();
       })
       .catch(error => {
         console.error('Error:', error);
@@ -78,6 +79,8 @@ export default class App extends React.Component {
         return <ProductList setView={this.setView}/>;
       case 'details':
         return <ProductDetails addToCart={this.addToCart} viewParams={viewParams} setView={this.setView}/>;
+      case 'cart':
+        return <CartSummary cartState={this.state.cart} viewParams={viewParams} setView={this.setView}/>;
     }
   }
 
@@ -85,7 +88,7 @@ export default class App extends React.Component {
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
       : <>
-        <Header cartItemCount={this.state.cart}/>
+        <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
         {this.renderView()}
       </>;
   }

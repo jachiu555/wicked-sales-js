@@ -26,6 +26,7 @@ export default class ProductList extends React.Component {
 
   render() {
     const productArray = this.state.products.map(items => <ProductListItem setView={this.props.setView} item={items} key={items.productId}/>);
+
     return (
       <div className="container">
         <div className="row justify-content-center">
