@@ -41,15 +41,3 @@ h3 {
 .card-body {
   font-size: 12px;
 }
-
-.cartSummaryButton {
-  position: fixed;
-  left: 0;
-  top: 5;
-  color: blue;
-  cursor: pointer;
-}
-
-.cartSummaryContainer {
-  width: 800px;
-}
