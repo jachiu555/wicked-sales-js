@@ -87,12 +87,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    const sumPrice = this.state.cart.map(item => item.price);
-    const totalPrice = sumPrice.reduce((a, b) => a + b, 0);
     return this.state.isLoading
       ? <h1>Testing connections...</h1>
       : <>
-        <Header totalCost={totalPrice} cartItemCount={this.state.cart.length} setView={this.setView}/>
+        <Header cartItemCount={this.state.cart.length} setView={this.setView}/>
         {this.renderView()}
       </>;
   }
