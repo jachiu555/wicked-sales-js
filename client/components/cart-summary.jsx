@@ -10,16 +10,14 @@ export default class CartSummary extends React.Component {
     const filledCartMessage = this.props.cartItemCount <= 0 ? '' : `Item Total: $${itemTotal}`;
 
     return (
-      <div className="container cartSummaryContainer">
-        <div className="container cartSummaryButton">
+      <div className="container">
+        <div className="cartSummaryButton">
           <a className="nav-link active" href="#" onClick={e => { this.props.setView('catalog', {}); }}>&lt; Back to Catalog</a>
         </div>
-        <div className="row">
+        <div className="col">
           {emptyCartMessage}
           <div className="card">
-            <div className="cartSummaryCard">
-              {cartArray}
-            </div>
+            {cartArray}
           </div>
           <h4 className="itemTotal mt-4">{filledCartMessage}</h4>
         </div>
