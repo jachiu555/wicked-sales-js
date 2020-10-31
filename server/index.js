@@ -50,11 +50,11 @@ app.get('/api/products/:productId', (req, res, next) => {
 });
 
 app.get('/api/cart', (req, res, next) => {
-  const sessionCartId = [req.session.cartId];
-
   if (!req.session.cartId) {
     return res.json([]);
   }
+
+  const sessionCartId = [req.session.cartId];
 
   db.query(`select "c"."cartItemId",
       "c"."price",
@@ -66,7 +66,7 @@ app.get('/api/cart', (req, res, next) => {
       join "products" as "p" using ("productId")
       where "c"."cartId" =  $1`, sessionCartId)
     .then(response => res.json(response.rows))
-    .catch(error => console.error(error));
+    .catch(error => next(error));
 });
 
 app.post('/api/cart', (req, res, next) => {
