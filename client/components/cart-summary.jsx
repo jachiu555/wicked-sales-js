@@ -16,7 +16,7 @@ export default class CartSummary extends React.Component {
         </div>
         <div className="col">
           {emptyCartMessage}
-          <div className="card">
+          <div className="col">
             {cartArray}
           </div>
           <h4 className="itemTotal mt-4">{filledCartMessage}</h4>

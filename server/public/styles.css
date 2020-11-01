@@ -50,3 +50,14 @@ h3 {
   color: blue;
   cursor: pointer;
 }
+
+.cartImg {
+  width: 17rem;
+}
+
+.cartItem {
+  border: 1px solid lightgray;
+  min-width: 0;
+  background-clip: border-box;
+  border-radius: .25rem;
+}
