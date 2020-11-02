@@ -52,7 +52,7 @@ h3 {
 }
 
 .cartImg {
-  width: 17rem;
+  width: 100%;
 }
 
 .cartItem {
@@ -60,4 +60,8 @@ h3 {
   min-width: 0;
   background-clip: border-box;
   border-radius: .25rem;
+}
+
+.cartItemDetails {
+  display: block;
 }
