@@ -13,6 +13,7 @@ h3 {
 
 .fa-shopping-cart {
   color: white;
+  cursor: pointer;
 }
 
 .container{
@@ -50,6 +51,17 @@ h3 {
   cursor: pointer;
 }
 
-.cartSummaryContainer {
-  width: 800px;
+.cartImg {
+  width: 100%;
+}
+
+.cartItem {
+  border: 1px solid lightgray;
+  min-width: 0;
+  background-clip: border-box;
+  border-radius: .25rem;
+}
+
+.cartItemDetails {
+  display: block;
 }

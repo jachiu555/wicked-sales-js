@@ -17,8 +17,8 @@ export default class Header extends React.Component {
         <header>
           <div className="d-flex">
             <h3 className="mr-auto p-2">$ Wicked Sales</h3>
-            <h3 className="p-2" onClick={this.handleClick}>{`${this.props.cartItemCount} item(s)`}</h3>
-            <i className="fas fa-shopping-cart p-2"></i>
+            <h3 className="p-2" >{`${this.props.cartItemCount} item(s)`}</h3>
+            <i className="fas fa-shopping-cart p-2" onClick={this.handleClick}></i>
           </div>
         </header>
       </div>

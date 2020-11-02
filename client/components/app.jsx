@@ -73,6 +73,8 @@ export default class App extends React.Component {
   renderView() {
     const viewName = this.state.view.name;
     const viewParams = this.state.view.params;
+    const sumPrice = this.state.cart.map(item => item.price);
+    const totalPrice = sumPrice.reduce((a, b) => a + b, 0);
 
     switch (viewName) {
       case 'catalog':
@@ -80,7 +82,7 @@ export default class App extends React.Component {
       case 'details':
         return <ProductDetails addToCart={this.addToCart} viewParams={viewParams} setView={this.setView}/>;
       case 'cart':
-        return <CartSummary cartState={this.state.cart} viewParams={viewParams} setView={this.setView}/>;
+        return <CartSummary totalCost={totalPrice} cartState={this.state.cart} viewParams={viewParams} setView={this.setView}/>;
     }
   }
 
