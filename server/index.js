@@ -132,7 +132,7 @@ app.post('/api/cart', (req, res, next) => {
   }
 });
 
-app.post('api/orders', (req, res, next) => {
+app.post('/api/orders', (req, res, next) => {
   if (!req.session.cartId) {
     return res.status(400).json({ error: 'There is no cartId in req.session.' });
   }
