@@ -133,12 +133,13 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
-  console.log('this is cartid',req.session)
-  if (!req.session.cartId) {
-    return res.status(400).json({ error: 'There is no cartId in req.session.' });
-  }
+  // console.log('this is cartid', req.session.cartId);
+  // if (!req.session.cartId) {
+  //   return res.status(400).json({ error: 'There is no cartId in req.session.' });
+  // }
 
   const { name, creditCard, shippingAddress } = req.body;
+  // console.log(req.body);
 
   if (!name || !creditCard || !shippingAddress) {
     return res.status(400).json({ error: 'There is no name, credit card, or shipping address in req.body.' });
@@ -149,9 +150,9 @@ app.post('/api/orders', (req, res, next) => {
   values ($1, $2, $3, $4)
   returning *`;
 
-  db.query(addOrder, [req.session.cartId, name, creditCard, shippingAddress])
+  db.query(addOrder, [1, name, creditCard, shippingAddress])
     .then(result => {
-      delete req.session.cartId;
+      // delete req.session.cartId;
       res.status(201).json(result.rows[0]);
     })
     .catch(error => next(error));
