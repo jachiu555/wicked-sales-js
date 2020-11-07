@@ -150,7 +150,7 @@ app.post('/api/orders', (req, res, next) => {
 
   db.query(addOrder, [1, name, creditCard, shippingAddress])
     .then(result => {
-      // delete req.session.cartId;
+      delete req.session.cartId;
       res.status(201).json(result.rows[0]);
     })
     .catch(error => next(error));
