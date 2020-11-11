@@ -148,7 +148,7 @@ app.post('/api/orders', (req, res, next) => {
   values ($1, $2, $3, $4)
   returning *`;
 
-  db.query(addOrder, [1, name, creditCard, shippingAddress])
+  db.query(addOrder, [req.session.cartId, name, creditCard, shippingAddress])
     .then(result => {
       delete req.session.cartId;
       res.status(201).json(result.rows[0]);
