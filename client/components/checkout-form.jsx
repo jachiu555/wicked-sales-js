@@ -3,11 +3,30 @@ import React from 'react';
 export default class CheckoutForm extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       userName: '',
       creditCardNumber: '',
       shippingAddress: ''
     };
+  }
+
+  onUserNameChange(event) {
+    this.setState({
+      userName: event.target.value
+    });
+  }
+
+  onCreditCardNumberChange(event) {
+    this.setState({
+      creditCardNumber: event.target.value
+    });
+  }
+
+  onShippingAddressChange(event) {
+    this.setState({
+      shippingAddress: event.target.value
+    });
   }
 
   render() {
