@@ -18,9 +18,13 @@ export default class CheckoutForm extends React.Component {
   }
 
   onCreditCardNumberChange(event) {
-    this.setState({
-      creditCardNumber: event.target.value
-    });
+    const re = /^[0-9\b]+$/;
+
+    if (event.target.value === '' || re.test(event.target.value)) {
+      this.setState({
+        creditCardNumber: event.target.value
+      });
+    }
   }
 
   onShippingAddressChange(event) {
@@ -29,10 +33,24 @@ export default class CheckoutForm extends React.Component {
     });
   }
 
+  handleSubmit(event) {
+    const myForm = document.getElementById('myForm');
+    const formData = new FormData(myForm);
+
+    fetch('/api/orders', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.json())
+      .catch(error => {
+        console.error(error);
+      });
+  }
+
   render() {
     return (
       <div>
-        <form className="needs-validation d-flex container justify-content-center">
+        <form id="myForm" className="needs-validation d-flex container justify-content-center">
           <div className="form-col">
             <div className="mb-3">
               <input type="text" className="form-control" id="validationCustom01" value="User Name" required></input>
