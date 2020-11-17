@@ -9,6 +9,11 @@ export default class CheckoutForm extends React.Component {
       creditCardNumber: '',
       shippingAddress: ''
     };
+
+    this.onUserNameChange = this.onUserNameChange.bind(this);
+    this.onCreditCardNumberChange = this.onCreditCardNumberChange.bind(this);
+    this.onShippingAddressChange = this.onShippingAddressChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   onUserNameChange(event) {
@@ -50,7 +55,7 @@ export default class CheckoutForm extends React.Component {
   render() {
     return (
       <div>
-        <form id="myForm" className="needs-validation d-flex container justify-content-center">
+        <form id="myForm" className="needs-validation d-flex container justify-content-center" onSubmit={this.handleSubmit}>
           <div className="form-col">
             <div className="mb-3">
               <input type="text" className="form-control" id="validationCustom01" value="User Name" required></input>
