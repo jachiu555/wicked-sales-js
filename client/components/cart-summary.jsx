@@ -1,9 +1,15 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
+// import CheckoutForm from './checkout-form';
 
 export default class CartSummary extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      products: [],
+      show: false
+    };
 
     this.checkoutButton = this.checkoutButton.bind(this);
   }
