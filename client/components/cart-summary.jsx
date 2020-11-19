@@ -11,7 +11,21 @@ export default class CartSummary extends React.Component {
       show: false
     };
 
+    this.showForm = this.showForm.bind(this);
+    this.hideForm = this.hideForm.bind(this);
     this.checkoutButton = this.checkoutButton.bind(this);
+  }
+
+  showForm(e) {
+    this.setState({
+      show: true
+    });
+  }
+
+  hideForm(e) {
+    this.setState({
+      show: false
+    });
   }
 
   checkoutButton() {
