@@ -1,6 +1,5 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
-// import CheckoutForm from './checkout-form';
 
 export default class CartSummary extends React.Component {
   constructor(props) {

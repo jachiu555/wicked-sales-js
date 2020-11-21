@@ -5,8 +5,8 @@ export default class CheckoutForm extends React.Component {
     super(props);
 
     this.state = {
-      userName: '',
-      creditCardNumber: '',
+      name: '',
+      creditCard: '',
       shippingAddress: ''
     };
 
@@ -14,12 +14,11 @@ export default class CheckoutForm extends React.Component {
     this.onCreditCardNumberChange = this.onCreditCardNumberChange.bind(this);
     this.onShippingAddressChange = this.onShippingAddressChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.placeOrderButton = this.placeOrderButton.bind(this);
   }
 
   onUserNameChange(event) {
     this.setState({
-      userName: event.target.value
+      name: event.target.value
     });
   }
 
@@ -28,7 +27,7 @@ export default class CheckoutForm extends React.Component {
 
     if (event.target.value === '' || re.test(event.target.value)) {
       this.setState({
-        creditCardNumber: event.target.value
+        creditCard: event.target.value
       });
     }
   }
@@ -42,10 +41,6 @@ export default class CheckoutForm extends React.Component {
   handleSubmit(event) {
     this.props.placeOrder(this.state);
   }
-
-  // placeOrderButton() {
-  //   this.props.placeOrder(this.state)
-  // }
 
   render() {
     return (
@@ -62,7 +57,7 @@ export default class CheckoutForm extends React.Component {
             </div>
             <div className="form-group">
               <label htmlFor="exampleFormControlTextarea3">Shipping Address</label>
-              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" onChange={this.onShippingAddressChange}></textarea>
             </div>
             <input className="btn btn-primary mb-5" type="submit" value="Place Order"></input>
           </div>
