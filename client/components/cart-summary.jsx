@@ -37,7 +37,6 @@ export default class CartSummary extends React.Component {
     const itemTotal = (this.props.totalCost / 100).toFixed(2);
     const emptyCartMessage = this.props.cartState.length <= 0 ? <h1>Cart is Empty!</h1> : '';
     const filledCartMessage = this.props.cartItemCount <= 0 ? '' : `Item Total: $${itemTotal}`;
-    const checkout = this.props.cartItemCount > 0 ? <button onClick={this.checkoutButton()}>CheckOut</button> : null;
 
     return (
       <div className="container">
@@ -46,9 +45,9 @@ export default class CartSummary extends React.Component {
         </div>
         <div className="col">
           {emptyCartMessage}
-          {checkout}
           <div className="col">
             {cartArray}
+            <button type="button" className="btn btn-primary" onClick={this.checkoutButton}>Checkout</button>
           </div>
           <h4 className="itemTotal mt-4">{filledCartMessage}</h4>
         </div>

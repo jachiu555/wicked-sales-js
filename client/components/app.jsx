@@ -21,6 +21,7 @@ export default class App extends React.Component {
     this.setView = this.setView.bind(this);
     this.getCartItems = this.getCartItems.bind(this);
     this.addToCart = this.addToCart.bind(this);
+    this.placeOrder = this.placeOrder.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +47,22 @@ export default class App extends React.Component {
       });
   }
 
+  placeOrder(order) {
+    fetch('api/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    })
+      .then(response => {
+        this.setState({
+          cart: []
+        });
+        this.setView('catalog', {});
+      });
+  }
+
   addToCart(product) {
     fetch('api/cart', {
       method: 'POST',
@@ -62,22 +79,6 @@ export default class App extends React.Component {
       })
       .catch(error => {
         console.error('Error:', error);
-      });
-  }
-
-  placeOrder(order) {
-    fetch('api/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(order)
-    })
-      .then(response => {
-        this.setState({
-          cart: []
-        });
-        this.setView('catalog', {});
       });
   }
 
