@@ -69,31 +69,6 @@ app.get('/api/cart', (req, res, next) => {
     .catch(error => next(error));
 });
 
-app.post('/api/orders', (req, res, next) => {
-  if (!req.session.cartId) {
-    return res.status(400).json({ error: 'There is no cartId in req.session.' });
-  }
-
-  const { name, creditCard, shippingAddress } = req.body;
-
-  if (!name || !creditCard || !shippingAddress) {
-    return res.status(400).json({ error: 'There is no name, credit card, or shipping address in req.body.' });
-  }
-
-  const addOrder = `insert into "orders"
-  ("cartId", "name", "creditCard", "shippingAddress")
-  values ($1, $2, $3, $4)
-  returning *`;
-
-  db.query(addOrder, [req.session.cartId, name, creditCard, shippingAddress])
-    .then(result => {
-      delete req.session.cartId;
-      res.status(201).json(result.rows[0]);
-    })
-    .catch(error => next(error));
-
-});
-
 app.post('/api/cart', (req, res, next) => {
   const userInput = parseInt([req.body.productId]);
 
@@ -155,6 +130,31 @@ app.post('/api/cart', (req, res, next) => {
   } else {
     res.status(400).send('ProductId cannot be less than 0.');
   }
+});
+
+app.post('/api/orders', (req, res, next) => {
+  if (!req.session.cartId) {
+    return res.status(400).json({ error: 'There is no cartId in req.session.' });
+  }
+
+  const { name, creditCard, shippingAddress } = req.body;
+
+  if (!name || !creditCard || !shippingAddress) {
+    return res.status(400).json({ error: 'There is no name, credit card, or shipping address in req.body.' });
+  }
+
+  const addOrder = `insert into "orders"
+  ("cartId", "name", "creditCard", "shippingAddress")
+  values ($1, $2, $3, $4)
+  returning *`;
+
+  db.query(addOrder, [req.session.cartId, name, creditCard, shippingAddress])
+    .then(result => {
+      delete req.session.cartId;
+      res.status(201).json(result.rows[0]);
+    })
+    .catch(error => next(error));
+
 });
 
 app.use('/api', (req, res, next) => {
