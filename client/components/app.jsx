@@ -48,7 +48,7 @@ export default class App extends React.Component {
   }
 
   placeOrder(order) {
-    fetch('api/orders', {
+    fetch('/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ export default class App extends React.Component {
   }
 
   addToCart(product) {
-    fetch('api/cart', {
+    fetch('/api/cart', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
